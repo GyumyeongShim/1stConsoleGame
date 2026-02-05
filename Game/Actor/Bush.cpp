@@ -6,6 +6,7 @@ Bush::Bush(const Vector2& pos)
 	m_SortingOrder = 1;
 }
 
-void Bush::OnDamaged()
+void Bush::OnCollison()
 {
+	// 충돌 받았을 경우 랜덤인카운터 발생 예정
 }

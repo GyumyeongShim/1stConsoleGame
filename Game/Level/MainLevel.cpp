@@ -13,7 +13,6 @@
 MainLevel::MainLevel()
 {
 	Initialize();
-	LoadMap("map.txt");
 }
 
 MainLevel::~MainLevel()
@@ -140,7 +139,7 @@ void MainLevel::LoadMap(const char* filename)
 
 void MainLevel::CheckCollision()
 {
-	std::vector<Actor*> Players; // todo 현재는 1명
+	std::vector<Player*> Players; // todo 현재는 1명
 	std::vector<Wall*> Walls; // 밀림처리
 	std::vector<Bush*> Bushes; // 랜덤 인카운터
 
@@ -149,89 +148,90 @@ void MainLevel::CheckCollision()
 	{
 		if (actor->IsTypeOf<Player>() == true)
 		{
-			Players.emplace_back(actor);
+			Players.emplace_back(actor->As<Player>());
 			continue;
 		}
 
 		if (actor->IsTypeOf<Wall>() == true)
 		{
-			Walls.emplace_back(actor);
+			Walls.emplace_back(actor->As<Wall>());
 			continue;
 		}
 
 		if (actor->IsTypeOf<Bush>() == true)
 		{
-			Bushes.emplace_back(actor);
+			Bushes.emplace_back(actor->As<Bush>());
 			continue;
 		}
 	}
 
-	//밀림처리
-	//판정 안해도 되는지 확인
-	//if (bullets.size() == 0 || enemies.size() == 0)
-	//	return;
-
-	////충돌 판정
-	//for (Actor* const Player : Players)
-	//{
-	//	for (Wall* const wall : Walls)
-	//	{
-	//		// AABB 겹침 판정.
-	//		if()
-	//		if (bullet->TestIntersect(enemy))
-	//		{
-	//			enemy->OnDamaged();
-	//			bullet->Destroy();
-
-	//			// Todo: 점수 추가.
-	//			continue;
-	//		}
-	//	}
-	// }
+	//수풀 충돌 랜덤인카운터
+	for (Player* const player : Players)
+	{
+		for (Bush* const bush : Bushes)
+		{
+			if (player->GetPosition() == bush->GetPosition())
+			{
+				bush->OnCollison();
+				break;
+			}
+		}
+	}
 
 	return;
 }
 
-//void MainLevel::CheckCollision(const Vector2& playerPos, const Vector2& nextPos)
-//{
-//	std::vector<Actor*> bullets;
-//	std::vector<Bush*> enemies;
-//
-//	// 액터 필터링.
-//	for (Actor* const actor : m_vecActors)
-//	{
-//		if (actor->IsTypeOf<Player>())
-//		{
-//			bullets.emplace_back(actor);
-//			continue;
-//		}
-//
-//		if (actor->IsTypeOf<Bush>())
-//		{
-//			enemies.emplace_back(actor->As<Bush>());
-//		}
-//	}
-//
-//	//판정 안해도 되는지 확인
-//	if (bullets.size() == 0 || enemies.size() == 0)
-//		return;
-//
-//	//충돌 판정
-//	for (Actor* const bullet : bullets)
-//	{
-//		for (Bush* const enemy : enemies)
-//		{
-//			// AABB 겹침 판정.
-//			if (bullet->TestIntersect(enemy))
-//			{
-//				enemy->OnDamaged();
-//				bullet->Destroy();
-//
-//				// Todo: 점수 추가.
-//				continue;
-//			}
-//		}
-//	}
-//
-//	return;
-//}
+bool MainLevel::CanMove(const Vector2& playerPos, const Vector2& nextPos)
+{
+	std::vector<Actor*> Walls;
+	for (Actor* const actor : m_vecActors)
+	{
+		if (actor->IsTypeOf<Wall>())
+		{
+			Walls.emplace_back(actor);
+			continue;
+		}
+	}
+
+	Actor* wallActor = nullptr;
+	for (Actor* const wall : Walls)
+	{
+		if (wall->GetPosition() == nextPos)
+		{
+			wallActor = wall;
+			break;
+		}
+	}
+
+	if (wallActor != nullptr)
+	{
+		Vector2 dir = nextPos - playerPos; //nextpos로 가는 벡터가 생김
+		Vector2 newPos = wallActor->GetPosition() + dir;
+
+		// 검색
+		for (Actor* const actor : m_vecActors)
+		{
+			if (actor->GetPosition() == newPos)
+			{
+				//벽이면 이동불가
+				if (actor->IsTypeOf<Wall>())
+					return false;
+			}
+		}
+
+		// 이동하려는 곳, 벽이 아니라면 이동 가능
+		for (Actor* const actor : m_vecActors)
+		{
+			if (actor->GetPosition() == nextPos)
+			{
+				if (actor->IsTypeOf<Wall>())
+					return false;
+
+				// 땅이거나 타겟
+				return true;
+			}
+		}
+	}
+
+	return true;
+}

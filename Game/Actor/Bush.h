@@ -10,5 +10,5 @@ class Bush : public Actor
 public:
 	Bush(const Vector2& pos);
 	// 대미지 받았을 때 처리할 함수.
-	void OnDamaged();
+	void OnCollison();
 };

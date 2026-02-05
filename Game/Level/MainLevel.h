@@ -1,6 +1,7 @@
 #pragma once
 #include "Level/Level.h"
 #include "Math/Vector2.h"
+#include "Interface/ICanPlayerMove.h"
 
 using namespace Wannabe;
 
@@ -10,7 +11,7 @@ using namespace Wannabe;
 * map, player, 인카운트, 전투
 */
 
-class MainLevel : public Level
+class MainLevel : public Level, public ICanPlayerMove
 {
 	RTTI_DECLARATIONS(MainLevel, Level)
 public:
@@ -28,7 +29,7 @@ private:
 	// 오브젝트와 충돌 처리
 	// 해당 오브젝트한테 invoke 또는 reactOn 시킨다.
 	void CheckCollision();
-	//virtual bool CanMove(const Vector2& playerPos, const Vector2& nextPos) override;
+	virtual bool CanMove(const Vector2& playerPos, const Vector2& nextPos) override;
 
 private:
 	Vector2 m_vPlayerStartPos;

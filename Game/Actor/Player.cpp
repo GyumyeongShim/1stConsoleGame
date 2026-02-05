@@ -3,6 +3,8 @@
 #include "Engine/Engine.h"
 #include "Level/Level.h"
 
+#include "Interface/ICanPlayerMove.h"
+
 #include <iostream>
 #include <Windows.h>
 
@@ -13,14 +15,11 @@ Player::Player(const Vector2& pos)
 	m_SortingOrder = 10;
 }
 
-const Vector2 Player::GetNextPos()
-{
-	return m_vNextPos;
-}
-
 void Player::BeginPlay()
 {
 	super::BeginPlay();
+
+	canPlayerMoveInterface = dynamic_cast<ICanPlayerMove*>(GetOwner());
 }
 
 void Player::Tick(float deltaTime)
@@ -37,36 +36,46 @@ void Player::Tick(float deltaTime)
 	//이동
 	if (Input::Get().GetKeyDown(VK_LEFT))
 	{
-		m_Pos.x -= 1;
+		Vector2 newPos(GetPosition().x - 1, GetPosition().y);
+		if (canPlayerMoveInterface->CanMove(GetPosition(), newPos))
+		{
+			SetPosition(newPos);
+		}
+
 		if (m_Pos.x < 0)
 			m_Pos.x = 0;
 
-		m_vNextPos = m_Pos;
 	}
 	if (Input::Get().GetKeyDown(VK_RIGHT))
 	{
 		// 오른쪽 이동 처리.
-		m_Pos.x += 1;
-		if (m_Pos.x + m_iWidth > Engine::Get().GetWidth())
-			m_Pos.x -= 1;
-
-		m_vNextPos = m_Pos;
+		Vector2 newPos(GetPosition().x + 1, GetPosition().y);
+		if (canPlayerMoveInterface->CanMove(GetPosition(), newPos))
+		{
+			SetPosition(newPos);
+		}
+		//m_Pos.x += 1;
+		//if (m_Pos.x + m_iWidth > Engine::Get().GetWidth())
+		//	m_Pos.x -= 1;
 	}
 	if (Input::Get().GetKeyDown(VK_UP))
 	{
-		m_Pos.y -= 1;
+		Vector2 newPos(GetPosition().x, GetPosition().y - 1);
+		if (canPlayerMoveInterface->CanMove(GetPosition(), newPos))
+		{
+			SetPosition(newPos);
+		}
+
 		if (m_Pos.y < 0)
 			m_Pos.y = 0;
-
-		m_vNextPos = m_Pos;
 	}
 	if (Input::Get().GetKeyDown(VK_DOWN))
 	{
-		m_Pos.y += 1;
-		if (m_Pos.y > Engine::Get().GetHeight())
-			m_Pos.y -= 1;
-
-		m_vNextPos = m_Pos;
+		Vector2 newPos(GetPosition().x, GetPosition().y + 1);
+		if (canPlayerMoveInterface->CanMove(GetPosition(), newPos))
+		{
+			SetPosition(newPos);
+		}
 	}
 }
 
