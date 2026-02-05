@@ -151,6 +151,11 @@ Renderer& Renderer::Get()
 	return *instance;
 }
 
+Vector2 Renderer::GetScreenSize()
+{
+	return m_vScreenSize;
+}
+
 void Renderer::Clear()
 {
 	frame->Clear(m_vScreenSize);

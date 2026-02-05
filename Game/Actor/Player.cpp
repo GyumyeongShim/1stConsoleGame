@@ -32,7 +32,6 @@ void Player::Tick(float deltaTime)
 		Engine::Get().QuitEngine();
 		return;
 	}
-
 	//¿Ãµø
 	if (Input::Get().GetKeyDown(VK_LEFT))
 	{

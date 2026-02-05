@@ -47,6 +47,11 @@ namespace Util
 		SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
 	}
 
+	inline void ClearScreen()
+	{
+		system("cls");
+	}
+
 	inline void SetRandomSeed()
 	{
 		srand(static_cast<unsigned int>(time(nullptr)));

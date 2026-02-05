@@ -45,6 +45,8 @@ namespace Wannabe
 
 			static Renderer& Get();
 
+			Vector2 GetScreenSize();
+
 	private:
 		void Clear(); //화면 지우기
 

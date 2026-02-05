@@ -2,6 +2,7 @@
 #include "Engine/Engine.h"
 #include "Core/Input.h"
 #include "Util/Utill.h"
+#include "Manager/BattleManager.h"
 
 #include "Actor/Player.h"
 #include "Actor/Wall.h"
@@ -17,6 +18,7 @@ MainLevel::MainLevel()
 
 MainLevel::~MainLevel()
 {
+	SafeDelete(m_BattleMgr);
 }
 
 void MainLevel::Tick(float deltaTime)
@@ -25,6 +27,12 @@ void MainLevel::Tick(float deltaTime)
 
 	//todo 여기서 수풀하고 충돌체크를 하자.
 	CheckCollision();
+
+	if (Input::Get().GetKeyDown(VK_TAB))
+	{
+		m_BattleMgr->Start();
+		return;
+	}
 }
 
 void MainLevel::Draw()
@@ -36,6 +44,7 @@ void MainLevel::Initialize()
 {
 	 //변수 초기화 이외에 생성자에서 처리하면 좋을 것들
 	//월드 생성, player 생성/초기위치,
+	m_BattleMgr = new BattleManager();
 	LoadMap("map.txt");
 	AddNewActor(new Player(m_vPlayerStartPos));
 }

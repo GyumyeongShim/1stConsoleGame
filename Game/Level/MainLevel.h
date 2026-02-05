@@ -2,6 +2,7 @@
 #include "Level/Level.h"
 #include "Math/Vector2.h"
 #include "Interface/ICanPlayerMove.h"
+#include "Manager/BattleManager.h"
 
 using namespace Wannabe;
 
@@ -33,5 +34,6 @@ private:
 
 private:
 	Vector2 m_vPlayerStartPos;
+	BattleManager* m_BattleMgr = nullptr;
 };
 

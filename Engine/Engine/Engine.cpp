@@ -3,6 +3,7 @@
 #include "Core/Input.h"
 #include "Util/Utill.h"
 #include "Render/Renderer.h"
+#include "Manager/BattleManager.h"
 
 #include <iostream>
 #include <Windows.h> //입력처리를 위해
