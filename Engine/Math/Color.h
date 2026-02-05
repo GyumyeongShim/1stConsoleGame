@@ -1,0 +1,29 @@
+#pragma once
+
+#include "Common/Common.h"
+#include <Windows.h>
+
+namespace Wannabe
+{
+	enum class WANNABE_API Color : unsigned short
+	{
+		Black = 0,
+		Red = FOREGROUND_RED,
+		Green = FOREGROUND_GREEN,
+		Blue = FOREGROUND_BLUE,
+		White = Blue | Green | Red,
+
+        Cyan = FOREGROUND_GREEN | FOREGROUND_BLUE,
+        Magenta = FOREGROUND_RED | FOREGROUND_BLUE,
+        Yellow = FOREGROUND_RED | FOREGROUND_GREEN,
+
+        RightGray = FOREGROUND_INTENSITY,
+        RightBlue = FOREGROUND_INTENSITY | FOREGROUND_BLUE,
+        RightGreen = FOREGROUND_INTENSITY | FOREGROUND_GREEN,
+        RightCyan = FOREGROUND_INTENSITY | FOREGROUND_GREEN | FOREGROUND_BLUE,
+        RightRed = FOREGROUND_INTENSITY | FOREGROUND_RED,
+        RightMagenta = FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_BLUE,
+        RightYellow = FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN,
+        RightWhite = FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE
+	};
+}
