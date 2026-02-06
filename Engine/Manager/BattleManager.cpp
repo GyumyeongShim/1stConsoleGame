@@ -72,13 +72,18 @@ void BattleManager::PlayAni()
 
             // 좌측
             Renderer::Get().Submit("W", Vector2(mirroredX, y), color, 0);
+
             // 우측 (좌우 대칭)
-            Renderer::Get().Submit("W", Vector2(iWidth - 1 - mirroredX, y), color, 0);
+            Renderer::Get().Submit("0", Vector2(iWidth - 1 - mirroredX, y), color, 0);
         }
         
         Renderer::Get().Draw();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(80)); // 30ms 간격
+        float t = static_cast<float>(y) / iHeight;
+
+        // ease-out 느낌
+        int delay = static_cast<int>(20 + 80 * t * t);
+        std::this_thread::sleep_for(std::chrono::milliseconds(delay));
     }
 }
 

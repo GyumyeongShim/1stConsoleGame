@@ -33,6 +33,9 @@ namespace Wannabe
 		// 충돌 여부 확인 함수
 		bool TestIntersect(const Actor* const other);
 
+		// 액터의 이미지 값 변경 함수
+		void ChangeImage(const char* newImage);
+
 		// 위치 변경 및 읽기 함수
 		void SetPosition(const Vector2& pos);
 		inline Vector2 GetPosition() const { return m_Pos; }

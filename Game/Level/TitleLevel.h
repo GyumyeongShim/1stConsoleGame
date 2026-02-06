@@ -6,6 +6,35 @@
 
 using namespace Wannabe;
 
+//메뉴 아이템 구조체
+struct MenuItem
+{
+	//메뉴 선택됬을때 실행될 함수의 타입
+	using OnSelected = void (*)();
+
+	MenuItem(const char* txt, OnSelected onSelected)
+		: onSelected(onSelected)
+	{
+		size_t length = strlen(txt) + 1;
+		this->text = new char[length];
+		strcpy_s(this->text, length, txt);
+	}
+
+	~MenuItem()
+	{
+		if (text)
+		{
+			delete[] text;
+			text = nullptr;
+		}
+	}
+	//메뉴 텍스트
+	char* text = nullptr;
+
+	// 메뉴 선택됐을 때 실행될 로직 (함수 - 함수 포인터)
+	OnSelected onSelected = nullptr;
+};
+
 class TitleLevel : public Level
 {
 	RTTI_DECLARATIONS(TitleLevel, Level)
@@ -13,6 +42,7 @@ public:
 	TitleLevel();
 	~TitleLevel();
 
+	virtual void Tick(float deltaTime) override;
 	virtual void Draw() override;
 private:
 	//현재 활성화된 메뉴 아이템 인덱스.
@@ -23,6 +53,8 @@ private:
 
 	// 선택되지 않은 아이템의 색상.
 	Color m_DeselectedColor = Color::White;
+	//메뉴 아이템 배열
+	std::vector<MenuItem*> m_vecItems;
 };
 
 

@@ -28,6 +28,22 @@ Game::~Game()
 	m_vecLevels.clear();
 }
 
+void Game::ToggleMenu()
+{
+	//화면 지우기.
+	system("cls");
+
+	//변경할 인덱스 계산
+	//현재 활성 레벨 인덱스가 1이면 0으로
+	//현재 활성 레벨 인덱스가 0이면 1으로
+	// (1-x)
+	int stateIndex = static_cast<int>(state);
+	int Nextstate = 1 - stateIndex;
+	state = (State)Nextstate;
+
+	m_MainLevel = m_vecLevels[static_cast<int>(state)];
+}
+
 Game& Game::Get()
 {
 	if (!instance)

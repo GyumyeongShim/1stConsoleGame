@@ -91,7 +91,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor\Bush.cpp" />
+    <ClCompile Include="Actor\EnemyDestroyEffect.cpp" />
     <ClCompile Include="Actor\Ground.cpp" />
+    <ClCompile Include="Actor\Monster.cpp" />
     <ClCompile Include="Actor\Player.cpp" />
     <ClCompile Include="Actor\Wall.cpp" />
     <ClCompile Include="Game\Game.cpp" />
@@ -101,7 +103,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\Bush.h" />
+    <ClInclude Include="Actor\EnemyDestroyEffect.h" />
     <ClInclude Include="Actor\Ground.h" />
+    <ClInclude Include="Actor\Monster.h" />
     <ClInclude Include="Actor\Player.h" />
     <ClInclude Include="Actor\Wall.h" />
     <ClInclude Include="Game\Game.h" />

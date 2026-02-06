@@ -77,6 +77,17 @@ namespace Wannabe
 		return m_Pos.y == other->m_Pos.y;
 	}
 
+	void Actor::ChangeImage(const char* newImage)
+	{
+		// 기존 메모리 해제.
+		SafeDeleteArray(m_Image);
+
+		// 새로운 문자열 복사.
+		m_iWidth = static_cast<int>(strlen(newImage));
+		m_Image = new char[m_iWidth + 1];
+		strcpy_s(m_Image, m_iWidth + 1, newImage);
+	}
+
 	void Actor::SetPosition(const Vector2& pos)
 	{
 		//Renderer::Draw(m_Pos, ' '); //빈칸 그리기 요청

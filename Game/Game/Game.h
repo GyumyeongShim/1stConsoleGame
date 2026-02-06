@@ -18,6 +18,8 @@ public:
 	Game();
 	~Game();
 
+	void ToggleMenu();
+
 	static Game& Get();
 
 private:
