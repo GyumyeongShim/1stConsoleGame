@@ -1,109 +1,95 @@
 #include "Effect_BattleStart.h"
 #include "Engine/Engine.h"
-// È¿°ú Àç»ı¿¡ »ç¿ëÇÒ ¹®ÀÚ¿­ ½ÃÄö½º (ÀÏÁ¾ÀÇ ¾Ö´Ï¸ŞÀÌ¼Ç ÇÁ·¹ÀÓ).
+
+//í˜„ì¬ í•œì¤„ì”© ë‚˜ì˜¤ê³  ìˆì–´ì„œ ì´ìŠˆì„
+// í•œê¸€ìì”© ë‚˜ì˜¬ ìˆ˜ ìˆê²Œ ìˆ˜ì •ì´ í•„ìš”í•¨
+//ìœ„ ì•„ë˜ê°€ ê³ ë ¤ ì—†ì´ ì¼ë‹¨ ë‚˜ì˜¤ê³  ìˆìŒ
+
+// B
+static const char* B_LINE1 = "########";
+static const char* B_LINE2 = "#       #";
+static const char* B_LINE3 = "########";
+static const char* B_LINE4 = "#       #";
+static const char* B_LINE5 = "########";
+
+// A
+static const char* A_LINE1 = " ###### ";
+static const char* A_LINE2 = "#      #";
+static const char* A_LINE3 = "########";
+static const char* A_LINE4 = "#      #";
+static const char* A_LINE5 = "#      #";
+
+// T
+static const char* T_LINE1 = "#######";
+static const char* T_LINE2 = "  ##  ";
+static const char* T_LINE3 = "  ##  ";
+static const char* T_LINE4 = "  ##  ";
+static const char* T_LINE5 = "  ##  ";
+
+// L
+static const char* L_LINE1 = "##    ";
+static const char* L_LINE2 = "##    ";
+static const char* L_LINE3 = "##    ";
+static const char* L_LINE4 = "##    ";
+static const char* L_LINE5 = "#######";
+
+// E
+static const char* E_LINE1 = "#######";
+static const char* E_LINE2 = "##     ";
+static const char* E_LINE3 = "###### ";
+static const char* E_LINE4 = "##     ";
+static const char* E_LINE5 = "#######";
+
 static const Effect_BattleStart::EffectFrame sequence[] =
 {
-	//Effect_BattleStart::EffectFrame("   B   ", 0.1f, Color::Red),
-	//Effect_BattleStart::EffectFrame("  BA  ", 0.1f, Color::Yellow),
-	//Effect_BattleStart::EffectFrame(" BAT  ", 0.1f, Color::Green),
-	//Effect_BattleStart::EffectFrame("BATTLE!", 0.3f, Color::Red),
-	//Effect_BattleStart::EffectFrame("BATTLE!", 0.3f, Color::Yellow),
-	//Effect_BattleStart::EffectFrame("BATTLE!", 0.3f, Color::Green)
+    // Letter B (Red)
+    Effect_BattleStart::EffectFrame(B_LINE1, 0.05f, Color::Red, Vector2(23,10)),
+    Effect_BattleStart::EffectFrame(B_LINE2, 0.05f, Color::Red, Vector2(23,11)),
+    Effect_BattleStart::EffectFrame(B_LINE3, 0.05f, Color::Red, Vector2(23,12)),
+    Effect_BattleStart::EffectFrame(B_LINE4, 0.05f, Color::Red, Vector2(23,13)),
+    Effect_BattleStart::EffectFrame(B_LINE5, 0.05f, Color::Red, Vector2(23,14)),
 
-	//B
-	Effect_BattleStart::EffectFrame("____ ", 0.1f, Color::Red,Vector2(23,10)),
-	Effect_BattleStart::EffectFrame("_   _", 0.1f, Color::Red,Vector2(23,11)),
-	Effect_BattleStart::EffectFrame("____ ", 0.1f, Color::Red,Vector2(23,12)),
-	Effect_BattleStart::EffectFrame("_   _", 0.1f, Color::Red,Vector2(23,13)),
-	Effect_BattleStart::EffectFrame("____ ", 0.1f, Color::Red,Vector2(23,14)),
+    // Letter A (Yellow)
+    Effect_BattleStart::EffectFrame(A_LINE1, 0.05f, Color::Yellow, Vector2(28,10)),
+    Effect_BattleStart::EffectFrame(A_LINE2, 0.05f, Color::Yellow, Vector2(28,11)),
+    Effect_BattleStart::EffectFrame(A_LINE3, 0.05f, Color::Yellow, Vector2(28,12)),
+    Effect_BattleStart::EffectFrame(A_LINE4, 0.05f, Color::Yellow, Vector2(28,13)),
+    Effect_BattleStart::EffectFrame(A_LINE5, 0.05f, Color::Yellow, Vector2(28,14)),
 
+    // First T (Green)
+    Effect_BattleStart::EffectFrame(T_LINE1, 0.05f, Color::Green, Vector2(34,10)),
+    Effect_BattleStart::EffectFrame(T_LINE2, 0.05f, Color::Green, Vector2(34,11)),
+    Effect_BattleStart::EffectFrame(T_LINE3, 0.05f, Color::Green, Vector2(34,12)),
+    Effect_BattleStart::EffectFrame(T_LINE4, 0.05f, Color::Green, Vector2(34,13)),
+    Effect_BattleStart::EffectFrame(T_LINE5, 0.05f, Color::Green, Vector2(34,14)),
 
+    // Second T (Red)
+    Effect_BattleStart::EffectFrame(T_LINE1, 0.05f, Color::Red, Vector2(40,10)),
+    Effect_BattleStart::EffectFrame(T_LINE2, 0.05f, Color::Red, Vector2(40,11)),
+    Effect_BattleStart::EffectFrame(T_LINE3, 0.05f, Color::Red, Vector2(40,12)),
+    Effect_BattleStart::EffectFrame(T_LINE4, 0.05f, Color::Red, Vector2(40,13)),
+    Effect_BattleStart::EffectFrame(T_LINE5, 0.05f, Color::Red, Vector2(40,14)),
 
-	//ba
-	Effect_BattleStart::EffectFrame("____ ", 0.1f, Color::Yellow,Vector2(23,10)),
-	Effect_BattleStart::EffectFrame("_   _", 0.1f, Color::Yellow,Vector2(23,11)),
-	Effect_BattleStart::EffectFrame("____ ", 0.1f, Color::Yellow,Vector2(23,12)),
-	Effect_BattleStart::EffectFrame("_   _", 0.1f, Color::Yellow,Vector2(23,13)),
-	Effect_BattleStart::EffectFrame("____ ", 0.1f, Color::Yellow,Vector2(23,14)),
+    // Letter L (Yellow)
+    Effect_BattleStart::EffectFrame(L_LINE1, 0.05f, Color::Yellow, Vector2(46,10)),
+    Effect_BattleStart::EffectFrame(L_LINE2, 0.05f, Color::Yellow, Vector2(46,11)),
+    Effect_BattleStart::EffectFrame(L_LINE3, 0.05f, Color::Yellow, Vector2(46,12)),
+    Effect_BattleStart::EffectFrame(L_LINE4, 0.05f, Color::Yellow, Vector2(46,13)),
+    Effect_BattleStart::EffectFrame(L_LINE5, 0.05f, Color::Yellow, Vector2(46,14)),
 
-	Effect_BattleStart::EffectFrame(" ___ ", 0.1f, Color::Yellow,Vector2(28,10)),
-	Effect_BattleStart::EffectFrame("_   _", 0.1f, Color::Yellow,Vector2(28,11)),
-	Effect_BattleStart::EffectFrame("_____", 0.1f, Color::Yellow,Vector2(28,12)),
-	Effect_BattleStart::EffectFrame("_   _", 0.1f, Color::Yellow,Vector2(28,13)),
-	Effect_BattleStart::EffectFrame("_   _", 0.1f, Color::Yellow,Vector2(28,14))
-
-	////bat
-	//Effect_BattleStart::EffectFrame("____ ", 0.1f, Color::Red),
-	//Effect_BattleStart::EffectFrame("_   _", 0.1f, Color::Red),
-	//Effect_BattleStart::EffectFrame("____ ", 0.1f, Color::Red),
-	//Effect_BattleStart::EffectFrame("_   _", 0.1f, Color::Red),
-	//Effect_BattleStart::EffectFrame("____ ", 0.1f, Color::Red),
-
-	//Effect_BattleStart::EffectFrame(" ___ ", 0.1f, Color::Red),
-	//Effect_BattleStart::EffectFrame("_   _", 0.1f, Color::Red),
-	//Effect_BattleStart::EffectFrame("_____", 0.1f, Color::Red),
-	//Effect_BattleStart::EffectFrame("_   _", 0.1f, Color::Red),
-	//Effect_BattleStart::EffectFrame("_   _", 0.1f, Color::Red),
-
-
-
-	//(23,10),(24,10),(25,10),(26,10)        -> ####
-	//(23,11),(27,11)                        -> #   #
-	//(23,12),(24,12),(25,12),(26,12)        -> ####
-	//(23,13),(27,13)                        -> #   #
-	//(23,14),(24,14),(25,14),(26,14)        -> ####
-
-	//(28,10),(29,10),(30,10)                ->  ###
-	//(28,11),(32,11)                        -> #   #
-	//(28,12),(29,12),(30,12),(31,12),(32,12)-> #####
-	//(28,13),(32,13)                        -> #   #
-	//(28,14),(32,14)                        -> #   #
-
-	//(34,10),(35,10),(36,10),(37,10),(38,10) -> #####
-	//(36,11)                                 ->   #
-	//(36,12)                                 ->   #
-	//(36,13)                                 ->   #
-	//(36,14)                                 ->   #
-
-	//(34,10),(35,10),(36,10),(37,10),(38,10) -> #####
-	//(36,11)                                 ->   #
-	//(36,12)                                 ->   #
-	//(36,13)                                 ->   #
-	//(36,14)                                 ->   #
-
-	//(46,10)								  -> #
-	//(46,11)								  -> #
-	//(46,12)								  -> #
-	//(46,13)								  -> #
-	//(46,14),(47,14),(48,14),(49,14),(50,14) -> #####
-	
-	//(52,10),(53,10),(54,10),(55,10),(56,10) -> #####
-	//(52,11)                                 -> #
-	//(52,12),(53,12),(54,12),(55,12)         -> ####
-	//(52,13)                                 -> #
-	//(52,14),(53,14),(54,14),(55,14),(56,14) -> #####
+    // Letter E (Green)
+    Effect_BattleStart::EffectFrame(E_LINE1, 0.05f, Color::Green, Vector2(52,10)),
+    Effect_BattleStart::EffectFrame(E_LINE2, 0.05f, Color::Green, Vector2(52,11)),
+    Effect_BattleStart::EffectFrame(E_LINE3, 0.05f, Color::Green, Vector2(52,12)),
+    Effect_BattleStart::EffectFrame(E_LINE4, 0.05f, Color::Green, Vector2(52,13)),
+    Effect_BattleStart::EffectFrame(E_LINE5, 0.05f, Color::Green, Vector2(52,14))
 };
 
 Effect_BattleStart::Effect_BattleStart(const Vector2& position)
-	: super(sequence[0].frame, position, Color::Red)
+	: super(sequence[0].frame, sequence[0].Pos, sequence[0].color)
 {
-	// x À§Ä¡ °íÁ¤.
-	//int effectFrameImageLength = 8;
-	//this->m_Pos.x = position.x < 0 ? effectFrameImageLength + position.x : position.x;
-	//this->m_Pos.x = position.x + effectFrameImageLength > Engine::Get().GetWidth() ?
-	//	position.x - effectFrameImageLength : position.x;
-
-	m_Pos = { 35,12 }; //°­Á¦·Î Áß¾Ó°ªÀ» ÀÔ·Â
-
-	// ¾Ö´Ï¸ŞÀÌ¼Ç ½ÃÄö½º °³¼ö ±¸ÇÏ±â.
 	m_iEffectSequenceCnt = sizeof(sequence) / sizeof(sequence[0]);
-
-	// ´ÙÀ½ ¾Ö´Ï¸ŞÀÌ¼Ç±îÁö ´ë±âÇÒ ½Ã°£.
 	m_tTimer.SetTargerTime(sequence[0].playTime);
-
-	// »ö»ó ¼³Á¤.
-	m_Color = sequence[0].color;
-
 	m_SortingOrder = 10;
 }
 
@@ -111,34 +97,26 @@ void Effect_BattleStart::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
 
-	// ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ıÀ» À§ÇÑ Å¸ÀÌ¸Ó ¾÷µ¥ÀÌÆ®.
 	m_tTimer.Tick(deltaTime);
 	if (!m_tTimer.IsTimeOut())
 	{
 		return;
 	}
 
-	// ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı ³¡³µ´ÂÁö È®ÀÎ.
-	// ³¡³µÀ¸¸é »èÁ¦.
 	if (m_iCurSequenceIdx == m_iEffectSequenceCnt - 1)
 	{
 		Destroy();
 		return;
 	}
 
-	// Å¸ÀÌ¸Ó ¸®¼Â.
 	m_tTimer.Reset();
 
-	// ÀÌÆåÆ® ÇÁ·¹ÀÓ ¾÷µ¥ÀÌÆ®.
 	++m_iCurSequenceIdx;
 
-	// ´ÙÀ½ ½ÃÄö½º¿¡¼­ Àç»ıÇÒ ½Ã°£À¸·Î Å¸ÀÌ¸Ó Àç¼³Á¤.
 	m_tTimer.SetTargerTime(sequence[m_iCurSequenceIdx].playTime);
 
-	// ¾Ö´Ï¸ŞÀÌ¼Ç ÇÁ·¹ÀÓ¿¡ »ç¿ëÇÒ ¹®ÀÚ¿­À» ¾×ÅÍ¿¡ º¹»ç.
 	ChangeImage(sequence[m_iCurSequenceIdx].frame);
 	m_Pos = sequence[m_iCurSequenceIdx].Pos;
 
-	// »ö»ó ¼³Á¤.
 	m_Color = sequence[m_iCurSequenceIdx].color;
 }

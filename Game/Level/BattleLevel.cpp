@@ -54,7 +54,7 @@ void BattleLevel::SetupBattle(std::vector<Actor*> vecPlayer, std::vector<Actor*>
 void BattleLevel::Initialize()
 {
     // todo 임시UI, 연출 이후 진행
-    AddNewActor(new Effect_BattleStart(Vector2::Zero));
+    //AddNewActor(new Effect_BattleStart(Vector2::Zero));
     AddNewActor(new UI_Dialogue("dialogue 1", Vector2(2, 14), Color::Green));
     AddNewActor(new UI_Dialogue("Text12342432", Vector2(2, 15), Color::Green));
 }
@@ -103,7 +103,8 @@ void BattleLevel::Input()
     if (Input::Get().GetKeyDown('1')) // '1' 키가 공격이면
     {
         // 플레이어의 선택 저장 (예: PlayerAction = Attack)
-        m_eBattleState = BattleState::TurnCheck;
+        //m_eBattleState = BattleState::TurnCheck;
+        AddNewActor(new Effect_BattleStart(Vector2::Zero));
     }
     else if (Input::Get().GetKeyDown('2')) // '2' 키가 도망이면
     {
@@ -115,6 +116,8 @@ void BattleLevel::Input()
 void BattleLevel::Tick(float deltaTime)
 {
     super::Tick(deltaTime);
+
+    Input();
 
     //실시간 로직 처리.
     switch (m_eBattleState)
