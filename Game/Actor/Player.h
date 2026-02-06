@@ -17,5 +17,8 @@ protected:
 	virtual void Draw() override;
 
 private:
+	void Initialize();
+
+private:
 	ICanPlayerMove* canPlayerMoveInterface = nullptr;
 };

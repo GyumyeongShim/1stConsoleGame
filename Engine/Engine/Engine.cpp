@@ -3,7 +3,6 @@
 #include "Core/Input.h"
 #include "Util/Utill.h"
 #include "Render/Renderer.h"
-#include "Manager/BattleManager.h"
 
 #include <iostream>
 #include <Windows.h> //입력처리를 위해
@@ -114,12 +113,13 @@ namespace Wannabe
 
 	void Engine::SetNewLevel(Level* newLevel)
 	{
-		if(m_MainLevel)
-		{
-			//todo 임시, 지금은 당장 삭제함, 추후에 잘 작성할 예정
-			delete m_MainLevel;
-			m_MainLevel = nullptr;
-		}
+		//todo 레벨만 교체하는 것으로.
+		//if(m_MainLevel)
+		//{
+		//	//todo 임시, 지금은 당장 삭제함, 추후에 잘 작성할 예정
+		//	delete m_MainLevel;
+		//	m_MainLevel = nullptr;
+		//}
 
 		//레벨 설정
 		m_MainLevel = newLevel;

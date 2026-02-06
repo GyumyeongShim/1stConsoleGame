@@ -1,4 +1,5 @@
 #include "Bush.h"
+#include "Level/Level.h"
 
 Bush::Bush(const Vector2& pos)
 	:super("=", pos, Color::Green)
@@ -8,5 +9,6 @@ Bush::Bush(const Vector2& pos)
 
 void Bush::OnCollison()
 {
-	// 충돌 받았을 경우 랜덤인카운터 발생 예정
+	//todo 충돌 받았을 경우 랜덤인카운터
+	// 현재 내가 포함된 레벨에 전투 진행요청
 }

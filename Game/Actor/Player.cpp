@@ -2,6 +2,7 @@
 #include "Core/Input.h"
 #include "Engine/Engine.h"
 #include "Level/Level.h"
+#include "Level/BattleLevel.h"
 
 #include "Interface/ICanPlayerMove.h"
 
@@ -32,6 +33,11 @@ void Player::Tick(float deltaTime)
 		Engine::Get().QuitEngine();
 		return;
 	}
+
+	// 배틀레벨이라면 키입력 막기
+	if (GetOwner()->IsTypeOf<BattleLevel>() == true)
+		return;
+
 	//이동
 	if (Input::Get().GetKeyDown(VK_LEFT))
 	{
@@ -81,4 +87,14 @@ void Player::Tick(float deltaTime)
 void Player::Draw()
 {
 	super::Draw();
+}
+
+void Player::Initialize()
+{
+	m_eStat.m_iLv = 1;
+	m_eStat.m_iHp = 10;
+	m_eStat.m_iAtk = 4;
+	m_eStat.m_iExp = 2;
+	m_eStat.m_iTurnCnt = 2;
+	m_eStat.m_iMaxTurnCnt = 5;
 }

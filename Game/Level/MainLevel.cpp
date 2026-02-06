@@ -2,12 +2,13 @@
 #include "Engine/Engine.h"
 #include "Core/Input.h"
 #include "Util/Utill.h"
-#include "Manager/BattleManager.h"
 
+#include "Game/Game.h"
 #include "Actor/Player.h"
 #include "Actor/Wall.h"
 #include "Actor/Bush.h"
 #include "Actor/Ground.h"
+#include "Actor/Monster.h"
 
 #include <iostream>
 
@@ -18,7 +19,6 @@ MainLevel::MainLevel()
 
 MainLevel::~MainLevel()
 {
-	SafeDelete(m_BattleMgr);
 }
 
 void MainLevel::Tick(float deltaTime)
@@ -30,7 +30,6 @@ void MainLevel::Tick(float deltaTime)
 
 	if (Input::Get().GetKeyDown(VK_TAB))
 	{
-		m_BattleMgr->Start();
 		return;
 	}
 }
@@ -44,7 +43,6 @@ void MainLevel::Initialize()
 {
 	 //변수 초기화 이외에 생성자에서 처리하면 좋을 것들
 	//월드 생성, player 생성/초기위치,
-	m_BattleMgr = new BattleManager();
 	LoadMap("map.txt");
 	AddNewActor(new Player(m_vPlayerStartPos));
 }
@@ -152,11 +150,15 @@ void MainLevel::CheckCollision()
 	std::vector<Wall*> Walls; // 밀림처리
 	std::vector<Bush*> Bushes; // 랜덤 인카운터
 
+	std::vector<Actor*> ActorPlayers;
+	std::vector<Actor*> Monsters; //todo 임시로 몬스터 추가
+
 	//액터 찾아두기
 	for (Actor* const actor : m_vecActors) //전체 오브젝트를 순회
 	{
 		if (actor->IsTypeOf<Player>() == true)
 		{
+			ActorPlayers.emplace_back(actor);
 			Players.emplace_back(actor->As<Player>());
 			continue;
 		}
@@ -181,8 +183,9 @@ void MainLevel::CheckCollision()
 		{
 			if (player->GetPosition() == bush->GetPosition())
 			{
-				bush->OnCollison();
-				break;
+				// Util::Random(1, 5) > N; 특정값 이상이라면 전투를 진행한다.
+				Game::Get().BattleStart(ActorPlayers, Monsters);
+				return;
 			}
 		}
 	}

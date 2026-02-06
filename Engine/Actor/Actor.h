@@ -12,6 +12,20 @@ namespace Wannabe
 	{
 		RTTI_DECLARATIONS(Actor, RTTI); //RTTI 매크로 사용
 
+		struct Status
+		{
+			int m_iLv = 1;
+			int m_iExp = 0;
+			int m_iMaxExp = 0;
+
+			int m_iHp = 10;
+			int m_iAtk = 1;
+			int m_iDef = 1;
+
+			int m_iTurnCnt = 1; // ++1 Max되면 공격 가능.
+			int m_iMaxTurnCnt = 10;
+		};
+
 	public:
 		Actor(const char* image = " ", const Vector2& pos = Vector2::Zero, Color color = Color::White);
 		virtual ~Actor(); // 자식 클래스 소멸자 호출을 위해서 virtual 사용
@@ -51,6 +65,9 @@ namespace Wannabe
 		inline int GetSortingOrder() const { return m_SortingOrder; }
 		inline int GetWidth() const { return m_iWidth; }
 
+	public: // 어느 레벨에서든 접근 가능하게
+		Status m_eStat;
+
 	protected:
 		bool m_bHasBeganPlay = false; // begin 이벤트 받았는지 여부
 		bool m_bIsActive = true; //활성화 여부
@@ -71,6 +88,7 @@ namespace Wannabe
 		int m_SortingOrder = 0;
 
 		Vector2 m_Pos; // 위치
+
 	};
 
 }
