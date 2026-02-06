@@ -3,6 +3,8 @@
 
 using namespace Wannabe;
 
+class UI_Dialogue;
+
 class BattleLevel : public Level
 {
 	enum class BattleState
@@ -45,5 +47,9 @@ private:
 
 	std::vector<Actor*> m_vecTurnOrder;//순서
 
+	std::vector<UI_Dialogue*> m_vecDialogue; // 메시지 표기, 재활용을 위해 사용.
+
 	BattleState m_eBattleState;
+
+	int m_iCursorInx = -1;
 };

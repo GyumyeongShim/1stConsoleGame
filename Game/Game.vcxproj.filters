@@ -39,16 +39,19 @@
     <ClCompile Include="Actor\Ground.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\EnemyDestroyEffect.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Actor\Monster.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Level\BattleLevel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\UI_Dialogue.cpp">
+    <ClCompile Include="UI\UI_Dialogue.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UI_Btn.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect\Effect_BattleStart.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,16 +77,19 @@
     <ClInclude Include="Actor\Ground.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\EnemyDestroyEffect.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Actor\Monster.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Level\BattleLevel.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\UI_Dialogue.h">
+    <ClInclude Include="UI\UI_Dialogue.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UI_Btn.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\Effect_BattleStart.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

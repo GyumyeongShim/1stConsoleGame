@@ -35,7 +35,6 @@ namespace Wannabe
 
 	void Actor::Draw()
 	{
-		//Renderer::Draw(m_Pos, m_Color, m_Image);
 		//렌더러에 데이터 제출
 		Renderer::Get().Submit(m_Image, m_Pos, m_Color, m_SortingOrder);
 	}

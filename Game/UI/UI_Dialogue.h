@@ -11,8 +11,6 @@ class UI_Dialogue : public Actor
 public:
 	UI_Dialogue(const char* txt, const Vector2 pos, Color color);
 
-	~UI_Dialogue();
-
 	virtual void BeginPlay() override;
 	virtual void Tick(float deltaTime) override;
 private:

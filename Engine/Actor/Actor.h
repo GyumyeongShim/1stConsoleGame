@@ -22,8 +22,9 @@ namespace Wannabe
 			int m_iAtk = 1;
 			int m_iDef = 1;
 
-			int m_iTurnCnt = 1; // ++1 Max되면 공격 가능.
+			int m_iTurnCnt = 0; // ++1 Max되면 공격 가능.
 			int m_iMaxTurnCnt = 10;
+			const char* m_chName = nullptr;
 		};
 
 	public:

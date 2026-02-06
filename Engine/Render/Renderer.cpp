@@ -151,11 +151,6 @@ Renderer& Renderer::Get()
 	return *instance;
 }
 
-Vector2 Renderer::GetScreenSize()
-{
-	return m_vScreenSize;
-}
-
 void Renderer::Clear()
 {
 	frame->Clear(m_vScreenSize);
@@ -172,7 +167,6 @@ void Renderer::Submit(const char* txt, const Vector2& pos, Color color, int sort
 	command.m_iSortingOrder = sortingOrder;
 
 	m_vecRenderQueue.emplace_back(command);
-
 }
 
 void Renderer::Present()
@@ -187,5 +181,10 @@ void Renderer::Present()
 ScreenBuffer* Renderer::GetCurBuffer()
 {
 	return m_ScreenBuffer[m_iCurBufferIdx];
+}
+
+Vector2 Renderer::GetScreenSize()
+{
+	return m_vScreenSize;
 }
 

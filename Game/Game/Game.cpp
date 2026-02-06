@@ -18,7 +18,8 @@ Game::Game()
 	m_vecLevels.emplace_back(m_pMainLevel);
 	m_vecLevels.emplace_back(m_pBattleLevel);
 
-	m_pCurLevel = m_vecLevels[0]; //todo 임시로 메인구성만할것
+	//todo test를 위해 battlelevel 진행
+	m_pCurLevel = m_vecLevels[1];
 	Engine::Get().SetNewLevel(m_pCurLevel);
 }
 

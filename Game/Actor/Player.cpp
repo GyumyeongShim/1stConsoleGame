@@ -97,4 +97,5 @@ void Player::Initialize()
 	m_eStat.m_iExp = 2;
 	m_eStat.m_iTurnCnt = 2;
 	m_eStat.m_iMaxTurnCnt = 5;
+	m_eStat.m_chName = "Player";
 }

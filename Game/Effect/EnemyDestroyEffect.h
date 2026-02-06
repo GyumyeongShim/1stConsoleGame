@@ -37,7 +37,6 @@ class EnemyDestroyEffect : public Actor
 	};
 
 public:
-
 	EnemyDestroyEffect(const Vector2& position);
 
 	virtual void Tick(float deltaTime) override;

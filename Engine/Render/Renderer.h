@@ -44,25 +44,23 @@ namespace Wannabe
 			void Submit(const char* txt, const Vector2& pos, Color color = Color::White, int sortingOrder = 0);
 
 			static Renderer& Get();
-
 			Vector2 GetScreenSize();
 
-	private:
-		void Clear(); //화면 지우기
+		private:
+			void Clear(); //화면 지우기
 
-		void Present(); //더블 버퍼링을 활용해 활성화 버퍼를 교환하는 함수
+			void Present(); //더블 버퍼링을 활용해 활성화 버퍼를 교환하는 함수
 
-		ScreenBuffer* GetCurBuffer(); //현재 사용할 버퍼를 반환하는 함수 getter
+			ScreenBuffer* GetCurBuffer(); //현재 사용할 버퍼를 반환하는 함수 getter
+		private:
+			Vector2 m_vScreenSize; // 화면 크기
+			Frame* frame = nullptr; //관리할 프레임 객체
+			ScreenBuffer* m_ScreenBuffer[2] = {}; //이중 버퍼 배열
 
-	private:
-		Vector2 m_vScreenSize; // 화면 크기
-		Frame* frame = nullptr; //관리할 프레임 객체
-		ScreenBuffer* m_ScreenBuffer[2] = {}; //이중 버퍼 배열
+			int m_iCurBufferIdx = 0; // 현재 활성화된 버퍼 인덱스
+			std::vector<RenderCommand> m_vecRenderQueue; // 렌더 큐 (씬의 모든 그리기 명령을 모아두는 배열)
 
-		int m_iCurBufferIdx = 0; // 현재 활성화된 버퍼 인덱스
-		std::vector<RenderCommand> m_vecRenderQueue; // 렌더 큐 (씬의 모든 그리기 명령을 모아두는 배열)
-
-		static Renderer* instance; //싱글톤 구현을 위한
+			static Renderer* instance; //싱글톤 구현을 위한
 	};
 }
 

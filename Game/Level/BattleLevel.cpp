@@ -1,4 +1,5 @@
 #include "BattleLevel.h"
+#include "Game/Game.h"
 #include "Actor/Actor.h"
 #include "Util/Utill.h"
 #include "Core/Input.h"
@@ -6,7 +7,11 @@
 
 #include "Actor/Player.h"
 #include "Actor/Monster.h"
-#include "Game/Game.h"
+#include "Actor/Wall.h"
+
+#include "UI/UI_Dialogue.h"
+
+#include "Effect/Effect_BattleStart.h"
 
 #include <string>
 #include <algorithm>
@@ -16,6 +21,7 @@ using namespace Wannabe;
 BattleLevel::BattleLevel()
     :m_eBattleState(BattleState::Start)
 {
+    Initialize();
 }
 
 BattleLevel::~BattleLevel()
@@ -47,6 +53,10 @@ void BattleLevel::SetupBattle(std::vector<Actor*> vecPlayer, std::vector<Actor*>
 
 void BattleLevel::Initialize()
 {
+    // todo 임시UI, 연출 이후 진행
+    AddNewActor(new Effect_BattleStart(Vector2::Zero));
+    AddNewActor(new UI_Dialogue("dialogue 1", Vector2(2, 14), Color::Green));
+    AddNewActor(new UI_Dialogue("Text12342432", Vector2(2, 15), Color::Green));
 }
 
 void BattleLevel::PlayAni()
@@ -131,14 +141,8 @@ void BattleLevel::Tick(float deltaTime)
 
 void BattleLevel::Draw()
 {
-    super::Draw(); //액터 그리기
-    Draw_OutLine(); //테두리 그리기
-
-    //전투 UI 그리기
-    if (m_eBattleState == BattleState::CommandSelect)
-    {
-        Renderer::Get().Submit("atk: [1] Run: [2]", Vector2(20, 20), Color::White);
-    }
+    super::Draw();
+    Draw_OutLine();
 }
 
 void BattleLevel::Draw_OutLine()
@@ -147,20 +151,14 @@ void BattleLevel::Draw_OutLine()
     const int width = 80;
     const int height = 25;
 
-    for (int y = 0; y < height; y++) 
+    for (int y = 0; y < height; ++y) 
     {
-        for (int x = 0; x < width; x++) 
+        for (int x = 0; x < width; ++x) 
         {
-            if (y == 0 || y == height - 1 ||
-                x == 0 || x == width - 1) 
-            {
-                Renderer::Get().Submit("@", Vector2(20, 20), Color::White);
+            if (y == 0 || y == height - 1 || x == 0 || x == width -1) 
+            {   
+                Renderer::Get().Submit("@", Vector2(x, y));
             }
-            else 
-            {
-                Renderer::Get().Submit(" ", Vector2(20, 20), Color::White);
-            }
-
         }
     }
 }
@@ -174,22 +172,40 @@ void BattleLevel::Phase_Start()
 void BattleLevel::Phase_CommandSelect()
 {
     //Input을 받아서 뭘 선택할지 진행할 것
+    //int row = cursorIndex / 2;
+    //int col = cursorIndex % 2;
+
+    //if (key == VK_UP && row > 0) row--;
+    //if (key == VK_DOWN && row < 1) row++;
+    //if (key == VK_LEFT && col > 0) col--;
+    //if (key == VK_RIGHT && col < 1) col++;
+
+    //cursorIndex = row * 2 + col;
 }
 
 void BattleLevel::Phase_TurnCheck()
 {
+    if (m_vecTurnOrder.empty() == false)
+        m_vecTurnOrder.clear();
+
     for (Actor* actor : m_vecPlayerParty)
     {
-        actor->m_eStat.m_iTurnCnt + 1;
+        actor->m_eStat.m_iTurnCnt += 1;
         if (actor->m_eStat.m_iTurnCnt >= actor->m_eStat.m_iTurnCnt)
+        {
+            actor->m_eStat.m_iTurnCnt = 0;
             m_vecTurnOrder.emplace_back(actor);
+        }
     }
 
     for (Actor* enemyActor : m_vecEnemyParty)
     {
-        enemyActor->m_eStat.m_iTurnCnt + 1;
+        enemyActor->m_eStat.m_iTurnCnt += 1;
         if (enemyActor->m_eStat.m_iTurnCnt >= enemyActor->m_eStat.m_iTurnCnt)
+        {
+            enemyActor->m_eStat.m_iTurnCnt = 0;
             m_vecTurnOrder.emplace_back(enemyActor);
+        }
     }
 
     // 속도(agility) 기준 정렬 예시
@@ -203,30 +219,43 @@ void BattleLevel::Phase_TurnCheck()
 
 void BattleLevel::Phase_Animation()
 {
-    // 스킬 이펙트, hp 감소연출, 상태 이상 표시   
-    for(Actor* actor : m_vecTurnOrder)
-    for (Actor* actor : m_vecTurnOrder) 
+//    // 스킬 이펙트, hp 감소연출, 상태 이상 표시   
+//    for(Actor* actor : m_vecTurnOrder)
+//    for (Actor* actor : m_vecTurnOrder) 
+//    {
+//        if (!actor->IsAlive()) continue;
+//
+//        switch (actor->chosenAction) 
+//        {
+//        case Actor::Action::Attack: 
+//        {
+//            Actor* target = ChooseTarget(actor); // 타겟 선택 BattleLevel 담당
+//            std::cout << actor->GetName() << " 공격!" << target->GetName() << "\n";
+//            target->ReceiveDamage(actor->GetAttackPower());
+//            break;
+//        }
+//        case Actor::Action::Run:
+//            std::cout << actor->GetName() << " 도망!" << "\n";
+//            break;
+//        }
+//
+//        actor->chosenAction = Actor::Action::None; // 턴 종료
+//    }
+//
+    //만약 아무도 안죽었다면 다음턴
+    //
+    if (m_vecPlayerParty.empty() == true)
     {
-        if (!actor->IsAlive()) continue;
-
-        switch (actor->chosenAction) 
-        {
-        case Actor::Action::Attack: 
-        {
-            Actor* target = ChooseTarget(actor); // 타겟 선택 BattleLevel 담당
-            std::cout << actor->GetName() << " 공격!" << target->GetName() << "\n";
-            target->ReceiveDamage(actor->GetAttackPower());
-            break;
-        }
-        case Actor::Action::Run:
-            std::cout << actor->GetName() << " 도망!" << "\n";
-            break;
-        }
-
-        actor->chosenAction = Actor::Action::None; // 턴 종료
+        m_eBattleState = BattleState::Result;
+        return;
+    }
+    else if (m_vecEnemyParty.empty() == true)
+    {
+        m_eBattleState = BattleState::Result;
+        return;
     }
 
-m_eBattleState = BattleState::CommandSelect; // 다음 턴 준비
+    m_eBattleState = BattleState::CommandSelect; // 다음 턴 준비
 }
 
 void BattleLevel::Phase_Result()
