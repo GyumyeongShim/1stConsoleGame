@@ -5,6 +5,7 @@
 #include "Level/BattleLevel.h"
 
 #include "Interface/ICanPlayerMove.h"
+#include "Util/Utill.h"
 
 #include <iostream>
 #include <Windows.h>
@@ -14,6 +15,11 @@ Player::Player(const Vector2& pos)
 {
 	// 그리기 우선순위 높게 설정.
 	m_SortingOrder = 10;
+	m_eTeam = Team::Player;
+}
+
+Player::~Player()
+{
 }
 
 void Player::BeginPlay()
@@ -21,11 +27,14 @@ void Player::BeginPlay()
 	super::BeginPlay();
 
 	canPlayerMoveInterface = dynamic_cast<ICanPlayerMove*>(GetOwner());
+	//todo 스탯설정
 }
 
 void Player::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
+
+	m_pStatComponent->Update(deltaTime);
 
 	//esc키 처리
 	if (Input::Get().GetKeyDown(VK_ESCAPE))
@@ -91,11 +100,9 @@ void Player::Draw()
 
 void Player::Initialize()
 {
-	m_eStat.m_iLv = 1;
-	m_eStat.m_iHp = 10;
-	m_eStat.m_iAtk = 4;
-	m_eStat.m_iExp = 2;
-	m_eStat.m_iTurnCnt = 2;
-	m_eStat.m_iMaxTurnCnt = 5;
-	m_eStat.m_chName = "Player";
+	m_pStatComponent = new StatComponent();
+	if (m_pStatComponent == nullptr)
+		return;
+
+	
 }

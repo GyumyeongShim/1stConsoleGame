@@ -15,6 +15,8 @@ namespace Wannabe
 		m_iWidth = static_cast<int>(strlen(image));
 		this->m_Image = new char[m_iWidth+1];
 		strcpy_s(this->m_Image, m_iWidth + 1, image);
+
+		m_pStatComponent = new StatComponent();
 	}
 
 	Actor::~Actor()
@@ -30,7 +32,7 @@ namespace Wannabe
 
 	void Actor::Tick(float deltaTime)
 	{
-
+		m_pStatComponent->Update(deltaTime);
 	}
 
 	void Actor::Draw()

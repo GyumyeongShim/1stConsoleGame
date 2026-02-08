@@ -1,7 +1,27 @@
 #pragma once
 #include "Level/Level.h"
+#include "Util/BattleCommand.h"
+
+#include <queue>
 
 using namespace Wannabe;
+
+/*
+시간 흐름 관리
+게이지 업데이트
+MaxTurn 감지
+*/
+
+/*
+1.TurnCnt Check
+m_vecTurnOrder에 만족한 Actor 추가
+*****spd 스탯이 존재하면 해당 값으로 정렬
+
+2.actor가 행동 선택
+BattleCommand 생성
+
+3. command 실행
+*/
 
 class UI_Dialogue;
 
@@ -25,14 +45,17 @@ public:
 	void SetupBattle(std::vector<Actor*> vecPlayer, std::vector<Actor*> vecEnemy);
 
 private:
+	virtual void Tick(float deltaTime); //로직에 따른 출력 및 행동을 보여주기 위해 사용
+	virtual void Draw(); // 그리기용도
+
+private:
 	void Initialize(); // playani와 같은 것들을 진행한다.
 	void PlayAni(); // 입장시 애니메이션 재생
 
 	void Input(); // todo선택지를 입력받을 것
-	virtual void Tick(float deltaTime); //로직에 따른 출력 및 행동을 보여주기 위해 사용
-	virtual void Draw(); // 그리기용도
-
 	void Draw_OutLine();
+	void Draw_Menu();
+	void Draw_TargetMenu();
 
 	void Phase_Start();
 	void Phase_CommandSelect();
@@ -51,5 +74,8 @@ private:
 
 	BattleState m_eBattleState;
 
-	int m_iCursorInx = -1;
+	std::queue<BattleCommand*> m_queBattleCmd;
+
+	int m_iCursorInx = 0; // 메뉴 커서
+	int m_iTargetCursor = 0; // 타켓 커서, 최대 4마리까지...
 };

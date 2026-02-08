@@ -1,4 +1,4 @@
-#include "Effect_BattleStart.h"
+﻿#include "Effect_BattleStart.h"
 #include "Engine/Engine.h"
 
 //현재 한줄씩 나오고 있어서 이슈임
@@ -86,37 +86,37 @@ static const Effect_BattleStart::EffectFrame sequence[] =
 };
 
 Effect_BattleStart::Effect_BattleStart(const Vector2& position)
-	: super(sequence[0].frame, sequence[0].Pos, sequence[0].color)
+    : super(sequence[0].frame, sequence[0].Pos, sequence[0].color)
 {
-	m_iEffectSequenceCnt = sizeof(sequence) / sizeof(sequence[0]);
-	m_tTimer.SetTargerTime(sequence[0].playTime);
-	m_SortingOrder = 10;
+    m_iEffectSequenceCnt = sizeof(sequence) / sizeof(sequence[0]);
+    m_tTimer.SetTargerTime(sequence[0].playTime);
+    m_SortingOrder = 10;
 }
 
 void Effect_BattleStart::Tick(float deltaTime)
 {
-	super::Tick(deltaTime);
+    super::Tick(deltaTime);
 
-	m_tTimer.Tick(deltaTime);
-	if (!m_tTimer.IsTimeOut())
-	{
-		return;
-	}
+    m_tTimer.Tick(deltaTime);
+    if (!m_tTimer.IsTimeOut())
+    {
+        return;
+    }
 
-	if (m_iCurSequenceIdx == m_iEffectSequenceCnt - 1)
-	{
-		Destroy();
-		return;
-	}
+    if (m_iCurSequenceIdx == m_iEffectSequenceCnt - 1)
+    {
+        Destroy();
+        return;
+    }
 
-	m_tTimer.Reset();
+    m_tTimer.Reset();
 
-	++m_iCurSequenceIdx;
+    ++m_iCurSequenceIdx;
 
-	m_tTimer.SetTargerTime(sequence[m_iCurSequenceIdx].playTime);
+    m_tTimer.SetTargerTime(sequence[m_iCurSequenceIdx].playTime);
 
-	ChangeImage(sequence[m_iCurSequenceIdx].frame);
-	m_Pos = sequence[m_iCurSequenceIdx].Pos;
+    ChangeImage(sequence[m_iCurSequenceIdx].frame);
+    m_Pos = sequence[m_iCurSequenceIdx].Pos;
 
-	m_Color = sequence[m_iCurSequenceIdx].color;
+    m_Color = sequence[m_iCurSequenceIdx].color;
 }

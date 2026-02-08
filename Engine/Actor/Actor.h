@@ -4,28 +4,22 @@
 #include "Math/Vector2.h"
 #include "Math/Color.h"
 
+#include "Component/StatComponent.h"
+
 namespace Wannabe
 {
+	enum class Team
+	{
+		Player,
+		Enemy,
+		Neutral
+	};
+
 	class Level;
 	//dll로 만들때 dll 밖에서 접근할때 필요한 선언 __declspec(dllexport)
 	class WANNABE_API Actor : public RTTI 
 	{
 		RTTI_DECLARATIONS(Actor, RTTI); //RTTI 매크로 사용
-
-		struct Status
-		{
-			int m_iLv = 1;
-			int m_iExp = 0;
-			int m_iMaxExp = 0;
-
-			int m_iHp = 10;
-			int m_iAtk = 1;
-			int m_iDef = 1;
-
-			int m_iTurnCnt = 0; // ++1 Max되면 공격 가능.
-			int m_iMaxTurnCnt = 10;
-			const char* m_chName = nullptr;
-		};
 
 	public:
 		Actor(const char* image = " ", const Vector2& pos = Vector2::Zero, Color color = Color::White);
@@ -59,15 +53,16 @@ namespace Wannabe
 		void SetOwner(Level* newlevel) { m_Owner = newlevel; }
 		inline Level* GetOwner() const { return m_Owner; }
 
+		// 해당 엑터가 갖고 있는 스텟 컴포넌트
+		inline StatComponent* GetStat() const { return m_pStatComponent; }
+		Team GetTeam() const { return m_eTeam; }
+
 		//Getter
 		inline bool HasBeganPlay() const { return m_bHasBeganPlay; }
 		inline bool IsActive() const { return m_bIsActive && !m_bDestroyRequested; }
 		inline bool IsDestroyRequested() const { return m_bDestroyRequested; }
 		inline int GetSortingOrder() const { return m_SortingOrder; }
 		inline int GetWidth() const { return m_iWidth; }
-
-	public: // 어느 레벨에서든 접근 가능하게
-		Status m_eStat;
 
 	protected:
 		bool m_bHasBeganPlay = false; // begin 이벤트 받았는지 여부
@@ -90,7 +85,9 @@ namespace Wannabe
 
 		Vector2 m_Pos; // 위치
 
+		Team m_eTeam;
+
+		// Actor의 스탯
+		StatComponent* m_pStatComponent = nullptr;
 	};
-
 }
-

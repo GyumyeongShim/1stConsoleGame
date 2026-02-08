@@ -10,6 +10,7 @@ class Player : public Actor
 
 public:
 	Player(const Vector2& pos);
+	~Player();
 
 protected:
 	virtual void BeginPlay() override;
